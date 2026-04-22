@@ -637,7 +637,7 @@ export default function App() {
       </div>
 
       {view === "chat" && cfg && (
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", position: "relative", backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\\'60\\' height=\\'60\\' viewBox=\\'0 0 60 60\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cg fill=\\'%23ffffff\\' fill-opacity=\\'0.015\\'%3E%3Cpath d=\\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\\'/%3E%3C/g%3E%3C/svg%3E")' }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", position: "relative", backgroundImage:  "none"}}>
           <div style={{ padding: "10px 16px", background: "#202c33", display: "flex", alignItems: "center", gap: 12, borderBottom: "1px solid #222d34", zIndex: 2 }}>
             <button onClick={() => setView("home")} style={{ background: "none", border: "none", color: "#00a884", cursor: "pointer", fontSize: 18, padding: "2px 6px", display: "flex", alignItems: "center" }}>◀</button>
             <div style={{ width: 42, height: 42, borderRadius: "50%", background: cfg.avatarBg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>{cfg.emoji}</div>
