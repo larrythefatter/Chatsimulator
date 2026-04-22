@@ -1,7 +1,15 @@
 export default async function handler(req, res) {
-  const { messages, system } = req.body;
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
 
   try {
+    const { messages, system } = req.body || {};
+
+    if (!Array.isArray(messages) || !system) {
+      return res.status(400).json({ error: "Missing messages or system prompt" });
+    }
+
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -9,7 +17,7 @@ export default async function handler(req, res) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "mistralai/mistral-7b-instruct", // 免費模型
+        model: "openrouter/free",
         messages: [
           { role: "system", content: system },
           ...messages
@@ -19,10 +27,15 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    const text = data?.choices?.[0]?.message?.content || "⚠️ 無回應";
-    res.status(200).json({ text });
+    if (!response.ok) {
+      return res.status(response.status).json({
+        error: data?.error?.message || "OpenRouter API error"
+      });
+    }
 
+    const text = data?.choices?.[0]?.message?.content || "⚠️ 無回應";
+    return res.status(200).json({ text });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message || "Server error" });
   }
 }
